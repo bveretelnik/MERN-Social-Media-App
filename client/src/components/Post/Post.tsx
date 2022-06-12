@@ -13,6 +13,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
 import { IPost } from "../../types/types";
+import { useActions } from "../../hooks/useActions";
 
 interface IPostProps {
   post: IPost;
@@ -20,6 +21,16 @@ interface IPostProps {
 
 const Post: FC<IPostProps> = ({ post }) => {
   const classes = useStyles();
+  const { deletePost } = useActions();
+
+  const handleDeletePost = async (id: string) => {
+    try {
+      deletePost(id);
+    } catch (error) {
+      console.log((error as Error).message);
+    }
+  };
+
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -42,7 +53,7 @@ const Post: FC<IPostProps> = ({ post }) => {
           size="small"
           onClick={() => console.log("sfsf")}
         >
-          <MoreHorizIcon fontSize="default" />
+          <MoreHorizIcon fontSize="medium" />
         </Button>
       </div>
       <div className={classes.details}>
@@ -67,7 +78,13 @@ const Post: FC<IPostProps> = ({ post }) => {
         <Button size="small" color="primary" onClick={() => console.log("sfs")}>
           <ThumbUpAltIcon fontSize="small" /> Like {post.likeCount}{" "}
         </Button>
-        <Button size="small" color="primary" onClick={() => console.log("sfs")}>
+        <Button
+          size="small"
+          color="default"
+          onClick={() =>
+            handleDeletePost(post._id !== undefined ? post._id : "")
+          }
+        >
           <DeleteIcon fontSize="small" /> Delete
         </Button>
       </CardActions>

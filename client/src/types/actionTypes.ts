@@ -1,4 +1,4 @@
-import { IPost, IPosts } from "./types";
+import { IPost } from "./types";
 
 export enum PostsActionsType {
   FETCH_ALL = "FETCH_ALL",
@@ -16,5 +16,9 @@ interface CreatePostAction {
   type: PostsActionsType.CREATE;
   payload: IPost;
 }
+interface DeletePostAction {
+  type: PostsActionsType.DELETE;
+  payload: string;
+}
 
-export type PostAction = FetchPostsAction | CreatePostAction;
+export type PostAction = FetchPostsAction | CreatePostAction | DeletePostAction;

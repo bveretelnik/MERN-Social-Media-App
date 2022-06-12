@@ -12,11 +12,11 @@ export interface IPostsState {
 }
 
 export interface IPost {
-  _id: string;
-  createdAt: string;
+  _id?: string;
+  createdAt?: string;
   creator: string;
-  selectedFile: "";
-  likeCount: 0;
+  selectedFile?: string;
+  likeCount?: 0;
   title: string;
   message: string;
   tags: string[];

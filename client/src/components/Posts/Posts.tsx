@@ -8,8 +8,6 @@ import useStyles from "./styles";
 const Posts = () => {
   const { posts } = useTypedSelector((state) => state.posts);
   const classes = useStyles();
-
-  console.log(posts);
   return !posts.length ? (
     <CircularProgress />
   ) : (

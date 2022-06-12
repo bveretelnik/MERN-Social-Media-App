@@ -24,3 +24,13 @@ export const createPost =
       console.log((error as Error).message);
     }
   };
+
+export const deletePost =
+  (id: string) => async (dispatch: Dispatch<PostAction>) => {
+    try {
+      await api.deletePost(id);
+      dispatch({ type: PostsActionsType.DELETE, payload: id });
+    } catch (error) {
+      console.log((error as Error).message);
+    }
+  };

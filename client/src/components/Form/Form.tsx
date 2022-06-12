@@ -1,10 +1,7 @@
 import React, { FC, useState } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import useStyles from "./styles";
-// import FileBase from "react-file-base64";
-
-import { useSelector } from "react-redux";
-
+import FileBase from "react-file-base64";
 import { IPost } from "../../types/types";
 import { useActions } from "../../hooks/useActions";
 
@@ -19,7 +16,6 @@ const Form: FC = () => {
   const { createPost } = useActions();
 
   const handleSubmit = async () => {
-    // e.preventDefault();
     try {
       createPost(postData);
     } catch (error) {
@@ -41,7 +37,7 @@ const Form: FC = () => {
     <Paper className={classes.paper}>
       <div className={`${classes.root} ${classes.form}`}>
         <Typography variant="h6">
-          {"currentId" ? `Editing "{post.title}"` : "Creating a Memory"}
+          {false ? `Editing "{post.title}"` : "Creating a Memory"}
         </Typography>
         <TextField
           name="creator"
@@ -67,7 +63,7 @@ const Form: FC = () => {
           label="Message"
           fullWidth
           multiline
-          rows={4}
+          minRows={4}
           value={postData.message}
           onChange={(e) =>
             setPostData({ ...postData, message: e.target.value })
@@ -84,13 +80,13 @@ const Form: FC = () => {
           }
         />
         <div className={classes.fileInput}>
-          {/* <FileBase
+          <FileBase
             type="file"
             multiple={false}
-            onDone={({ base64 }) =>
+            onDone={({ base64 }: { base64: string }) =>
               setPostData({ ...postData, selectedFile: base64 })
             }
-          /> */}
+          />
         </div>
         <Button
           className={classes.buttonSubmit}
