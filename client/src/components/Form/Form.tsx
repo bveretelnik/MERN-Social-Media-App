@@ -1,11 +1,17 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import useStyles from "./styles";
 import FileBase from "react-file-base64";
 import { IPost } from "../../types/types";
 import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
-const Form: FC = () => {
+interface IPropsForm {
+  currentId: string;
+  setCurrentId: (id: string) => void;
+}
+
+const Form: FC<IPropsForm> = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState<IPost>({
     title: "",
     message: "",
@@ -13,11 +19,27 @@ const Form: FC = () => {
     tags: [],
   });
   const classes = useStyles();
-  const { createPost } = useActions();
+  const { posts } = useTypedSelector((state) => state.posts);
+  const { createPost, updatePost } = useActions();
+
+  const getCurrentPost = () => {
+    if (currentId !== "") {
+      return posts.find((post) => post._id === currentId);
+    }
+  };
+  const post = getCurrentPost();
+
+  useEffect(() => {
+    if (post) return setPostData(post);
+  }, [post]);
 
   const handleSubmit = async () => {
     try {
-      createPost(postData);
+      if (currentId == "") {
+        createPost(postData);
+      } else {
+        updatePost(currentId, postData);
+      }
     } catch (error) {
       console.log((error as Error).message);
     }
@@ -25,6 +47,7 @@ const Form: FC = () => {
   };
 
   const clear = () => {
+    setCurrentId("");
     setPostData({
       creator: "",
       title: "",
@@ -37,7 +60,7 @@ const Form: FC = () => {
     <Paper className={classes.paper}>
       <div className={`${classes.root} ${classes.form}`}>
         <Typography variant="h6">
-          {false ? `Editing "{post.title}"` : "Creating a Memory"}
+          {currentId !== "" ? `Editing ${post.title}` : "Creating a Memory"}
         </Typography>
         <TextField
           name="creator"

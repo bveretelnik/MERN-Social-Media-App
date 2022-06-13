@@ -20,5 +20,13 @@ interface DeletePostAction {
   type: PostsActionsType.DELETE;
   payload: string;
 }
+interface UpdatePostAction {
+  type: PostsActionsType.UPDATE;
+  payload: IPost;
+}
 
-export type PostAction = FetchPostsAction | CreatePostAction | DeletePostAction;
+export type PostAction =
+  | FetchPostsAction
+  | CreatePostAction
+  | DeletePostAction
+  | UpdatePostAction;

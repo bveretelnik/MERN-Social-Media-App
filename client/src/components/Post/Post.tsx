@@ -17,9 +17,10 @@ import { useActions } from "../../hooks/useActions";
 
 interface IPostProps {
   post: IPost;
+  setCurrentId: (id: string) => void;
 }
 
-const Post: FC<IPostProps> = ({ post }) => {
+const Post: FC<IPostProps> = ({ post, setCurrentId }) => {
   const classes = useStyles();
   const { deletePost } = useActions();
 
@@ -51,7 +52,7 @@ const Post: FC<IPostProps> = ({ post }) => {
         <Button
           style={{ color: "white" }}
           size="small"
-          onClick={() => console.log("sfsf")}
+          onClick={() => setCurrentId(post._id!)}
         >
           <MoreHorizIcon fontSize="medium" />
         </Button>
@@ -75,7 +76,11 @@ const Post: FC<IPostProps> = ({ post }) => {
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" onClick={() => console.log("sfs")}>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => console.log("Like")}
+        >
           <ThumbUpAltIcon fontSize="small" /> Like {post.likeCount}{" "}
         </Button>
         <Button
