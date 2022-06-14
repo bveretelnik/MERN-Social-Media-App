@@ -22,15 +22,7 @@ interface IPostProps {
 
 const Post: FC<IPostProps> = ({ post, setCurrentId }) => {
   const classes = useStyles();
-  const { deletePost } = useActions();
-
-  const handleDeletePost = async (id: string) => {
-    try {
-      deletePost(id);
-    } catch (error) {
-      console.log((error as Error).message);
-    }
-  };
+  const { deletePost, likePost } = useActions();
 
   return (
     <Card className={classes.card}>
@@ -79,16 +71,14 @@ const Post: FC<IPostProps> = ({ post, setCurrentId }) => {
         <Button
           size="small"
           color="primary"
-          onClick={() => console.log("Like")}
+          onClick={() => likePost(post._id !== undefined ? post._id : "")}
         >
           <ThumbUpAltIcon fontSize="small" /> Like {post.likeCount}{" "}
         </Button>
         <Button
           size="small"
           color="default"
-          onClick={() =>
-            handleDeletePost(post._id !== undefined ? post._id : "")
-          }
+          onClick={() => deletePost(post._id !== undefined ? post._id : "")}
         >
           <DeleteIcon fontSize="small" /> Delete
         </Button>

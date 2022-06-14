@@ -30,7 +30,9 @@ const App: FC = () => {
       <Grow in>
         <Container>
           <Grid
+            className={classes.mainContainer}
             container
+            direction="row"
             justifyContent="space-between"
             alignItems="stretch"
             spacing={3}

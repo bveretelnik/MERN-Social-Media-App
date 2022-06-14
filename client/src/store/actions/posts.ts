@@ -44,3 +44,13 @@ export const updatePost =
       console.log((error as Error).message);
     }
   };
+
+export const likePost =
+  (id: string) => async (dispatch: Dispatch<PostAction>) => {
+    try {
+      await api.likePost(id);
+      dispatch({ type: PostsActionsType.LIKE, payload: id });
+    } catch (error) {
+      console.log((error as Error).message);
+    }
+  };

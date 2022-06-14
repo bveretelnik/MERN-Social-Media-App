@@ -24,9 +24,14 @@ interface UpdatePostAction {
   type: PostsActionsType.UPDATE;
   payload: IPost;
 }
+interface LikePostAction {
+  type: PostsActionsType.LIKE;
+  payload: string;
+}
 
 export type PostAction =
   | FetchPostsAction
   | CreatePostAction
   | DeletePostAction
-  | UpdatePostAction;
+  | UpdatePostAction
+  | LikePostAction;
