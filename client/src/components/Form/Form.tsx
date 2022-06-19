@@ -35,7 +35,7 @@ const Form: FC<IPropsForm> = ({ currentId, setCurrentId }) => {
 
   const handleSubmit = async () => {
     try {
-      if (currentId) {
+      if (!currentId) {
         createPost(postData);
       } else {
         updatePost(currentId, postData);

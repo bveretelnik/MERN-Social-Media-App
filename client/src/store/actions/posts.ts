@@ -18,7 +18,7 @@ export const createPost =
   (post: IPost) => async (dispatch: Dispatch<PostAction>) => {
     try {
       const { data } = await api.createPost(post);
-
+      console.log(data);
       dispatch({ type: PostsActionsType.CREATE, payload: data });
     } catch (error) {
       console.log((error as Error).message);
