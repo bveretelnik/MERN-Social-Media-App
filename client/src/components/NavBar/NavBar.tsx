@@ -22,7 +22,7 @@ export const NavBar: FC<NavbarProps> = ({ user, setUser }) => {
   const logout = () => {
     logOut();
     setUser(null);
-    history("/");
+    history("/auth");
   };
 
   useEffect(() => {
