@@ -1,4 +1,4 @@
-import { IPost } from "./types";
+import { IPost, IUserState } from "./types";
 
 export enum PostsActionsType {
   FETCH_ALL = "FETCH_ALL",
@@ -6,6 +6,12 @@ export enum PostsActionsType {
   UPDATE = "UPDATE",
   DELETE = "DELETE",
   LIKE = "LIKE",
+}
+
+export enum UsersActionsType {
+  AUTH = "AUTH",
+  AUTH_GOOGLE = "AUTH_GOOGLE",
+  LOGOUT = "LOGOUT",
 }
 
 interface FetchPostsAction {
@@ -29,9 +35,31 @@ interface LikePostAction {
   payload: string;
 }
 
+interface AuthUserAction {
+  type: UsersActionsType.AUTH;
+  payload: IUserState;
+}
+interface AuthGoogleUserAction {
+  type: UsersActionsType.AUTH_GOOGLE;
+  payload: IUserState;
+}
+interface AuthUserAction {
+  type: UsersActionsType.AUTH;
+  payload: IUserState;
+}
+interface LogoutUserAction {
+  type: UsersActionsType.LOGOUT;
+  payload: any;
+}
+
 export type PostAction =
   | FetchPostsAction
   | CreatePostAction
   | DeletePostAction
   | UpdatePostAction
   | LikePostAction;
+
+export type UserAction =
+  | AuthUserAction
+  | LogoutUserAction
+  | AuthGoogleUserAction;

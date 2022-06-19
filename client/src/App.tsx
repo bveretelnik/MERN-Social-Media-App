@@ -1,51 +1,45 @@
-import React, { FC, useEffect, useState } from "react";
-import { Container, AppBar, Typography, Grow, Grid } from "@mui/material";
-import useStyles from "./styles";
-import Posts from "./components/Posts/Posts";
-import Form from "./components/Form/Form";
-import { useActions } from "./hooks/useActions";
+import React, { FC, useState } from "react";
+import { Container } from "@mui/material";
+
+import { NavBar } from "./components/NavBar/NavBar";
+import { Home } from "./components/Home/Home";
+import { Route, Routes } from "react-router-dom";
+// import { Auth } from "./components/Auth/Auth";
+import withSuspense from "./hoc/withSuspense";
+import { useTypedSelector } from "./hooks/useTypedSelector";
+import PrivateRoute from "./components/PrivatRouter/PrivatRouter";
+import { IUserState } from "./types/types";
+import { getStorageValue } from "./helper";
+
+// const Home = React.lazy(() =>
+//   import("./components/Home/Home").then((module) => ({
+//     default: module.Home,
+//   }))
+// );
+const Auth = React.lazy(() =>
+  import("./components/Auth/Auth").then((module) => ({
+    default: module.Auth,
+  }))
+);
 
 const App: FC = () => {
-  const [currentId, setCurrentId] = useState("");
-  const classes = useStyles();
-  const { getPosts } = useActions();
-
-  useEffect(() => {
-    getPosts();
-  }, [currentId]);
+  // const user = useTypedSelector((state) => state.user);
+  const [user, setUser] = useState<IUserState | null>(getStorageValue);
 
   return (
     <Container maxWidth="lg">
-      <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography className={classes.heading} variant="h2" align="center">
-          Memories
-        </Typography>
-        <img
-          className={classes.image}
-          src={"/assets/images/memories.png"}
-          alt="icon"
-          height="60"
+      <NavBar user={user} setUser={setUser} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute user={user}>
+              <Home />
+            </PrivateRoute>
+          }
         />
-      </AppBar>
-      <Grow in>
-        <Container>
-          <Grid
-            className={classes.mainContainer}
-            container
-            direction="row"
-            justifyContent="space-between"
-            alignItems="stretch"
-            spacing={3}
-          >
-            <Grid item xs={12} sm={7}>
-              <Posts setCurrentId={setCurrentId} />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <Form currentId={currentId} setCurrentId={setCurrentId} />
-            </Grid>
-          </Grid>
-        </Container>
-      </Grow>
+        {!user && <Route path="/auth" element={withSuspense(Auth)} />}
+      </Routes>
     </Container>
   );
 };

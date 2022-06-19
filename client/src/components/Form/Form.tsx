@@ -23,7 +23,7 @@ const Form: FC<IPropsForm> = ({ currentId, setCurrentId }) => {
   const { createPost, updatePost } = useActions();
 
   const getCurrentPost = () => {
-    if (currentId !== "") {
+    if (currentId) {
       return posts.find((post) => post._id === currentId);
     }
   };
@@ -35,7 +35,7 @@ const Form: FC<IPropsForm> = ({ currentId, setCurrentId }) => {
 
   const handleSubmit = async () => {
     try {
-      if (currentId === "") {
+      if (currentId) {
         createPost(postData);
       } else {
         updatePost(currentId, postData);
@@ -60,7 +60,9 @@ const Form: FC<IPropsForm> = ({ currentId, setCurrentId }) => {
     <Paper className={classes.paper}>
       <div className={`${classes.root} ${classes.form}`}>
         <Typography variant="h6">
-          {currentId !== "" ? `Editing ${post.title}` : "Creating a Memory"}
+          {currentId
+            ? `Editing ${post ? post.title : ""}`
+            : "Creating a Memory"}
         </Typography>
         <TextField
           name="creator"

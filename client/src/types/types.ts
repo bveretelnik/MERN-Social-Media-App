@@ -8,7 +8,7 @@ export interface IPostState {
 }
 
 export interface IPostsState {
-  posts: any[];
+  posts: IPost[];
 }
 
 export interface IPost {
@@ -16,8 +16,23 @@ export interface IPost {
   createdAt?: string;
   creator: string;
   selectedFile?: string;
-  likeCount?: 0;
+  likeCount?: number;
   title: string;
   message: string;
   tags: string[];
+}
+
+export interface IUser {
+  email?: string;
+  familyName?: string;
+  name?: string;
+  givenName?: string;
+  googleId?: string;
+  imageUrl?: string;
+  password?: string;
+  tokenId?: string;
+}
+
+export interface IUserState extends IUser {
+  tokenId?: string;
 }

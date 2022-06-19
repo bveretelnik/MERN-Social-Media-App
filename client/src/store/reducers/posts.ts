@@ -21,14 +21,17 @@ export const postReducer = (
     case PostsActionsType.UPDATE:
       return {
         posts: state.posts.map((post) =>
-          post.id === action.payload._id ? action.payload : post
+          post._id === action.payload._id ? action.payload : post
         ),
       };
     case PostsActionsType.LIKE:
       return {
         posts: state.posts.map((post) =>
           post._id === action.payload
-            ? { ...post, likeCount: post.likeCount + 1 }
+            ? {
+                ...post,
+                likeCount: post.likeCount ? post.likeCount + 1 : post.likeCount,
+              }
             : post
         ),
       };
