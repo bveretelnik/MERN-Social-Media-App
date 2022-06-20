@@ -9,7 +9,7 @@ import { getStorageValue } from "../../helper";
 
 interface NavbarProps {
   user: IUserState | null;
-  setUser: (...arg: any) => void;
+  setUser: (arg: any) => void;
 }
 
 export const NavBar: FC<NavbarProps> = ({ user, setUser }) => {
